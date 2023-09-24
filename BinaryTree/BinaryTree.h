@@ -14,11 +14,13 @@ public:
     Node* copyTree(Node* root);
     ~BinaryTree();
     void deleteTree(Node* root);
+    void cleanTree();
     void cleanSubTree(Node* root);
     bool isEmpty(Node* root);
     int height(Node* root);
     Node* getRoot();
-    int getNumberNodes(Node* root);
+    int getNumberNodes(Node* root) const; 
+    int getNumberNodes() const;
     Node* addNode(Node* root, int key);
     Node* addNode(int key);
     void deleteNode(Node* node);

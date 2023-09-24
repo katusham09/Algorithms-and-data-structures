@@ -67,6 +67,12 @@ void BinaryTree::cleanSubTree(Node* root)
     root->setRightChild(nullptr);
 }
 
+void BinaryTree::cleanTree()
+{
+    cleanSubTree(m_root);
+    m_root = nullptr;
+}
+
 bool BinaryTree::isEmpty(Node* root)
 {
     if (root == nullptr)
@@ -83,11 +89,16 @@ int BinaryTree::height(Node* root)
 }
 
 
-int BinaryTree::getNumberNodes(Node* root)
+int BinaryTree::getNumberNodes(Node* root) const
 {
     if (root == nullptr)
         return 0;
     return getNumberNodes(root->getLeftChild()) + getNumberNodes(root->getRightChild()) + 1;
+}
+
+int BinaryTree::getNumberNodes() const
+{
+   return getNumberNodes(m_root);
 }
 
 
