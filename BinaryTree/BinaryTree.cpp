@@ -15,7 +15,7 @@ BinaryTree::BinaryTree(const BinaryTree& copy)
 }
 
 
-Node* BinaryTree::copyTree(Node* root)
+BinaryTree::Node* BinaryTree::copyTree(Node* root)
 {
     Node* root_copy;
     if (root == nullptr) {
@@ -51,7 +51,7 @@ void BinaryTree::deleteTree(Node* root)
 }
 
 
-Node* BinaryTree::getRoot()
+BinaryTree::Node* BinaryTree::getRoot()
 {
     return m_root;
 }
@@ -107,7 +107,7 @@ int BinaryTree::getNumberNodes() const
 }
 
 
-Node* BinaryTree::addNode(Node* root, int key)
+BinaryTree::Node* BinaryTree::addNode(Node* root, int key)
 {
     if (!root)
         root = new Node(key);
@@ -119,7 +119,7 @@ Node* BinaryTree::addNode(Node* root, int key)
     return root;
 }
 
-Node* BinaryTree::addNode(int key)
+BinaryTree::Node* BinaryTree::addNode(int key)
 {
     m_root = addNode(m_root, key);
     return m_root;
@@ -165,7 +165,7 @@ BinaryTree& BinaryTree::operator=(const BinaryTree& other)
     return *this;
 }
 
-Node* BinaryTree::findParent(Node* node, Node* temp)
+BinaryTree::Node* BinaryTree::findParent(Node* node, Node* temp)
 {
     if (node == m_root || temp == nullptr)
         return nullptr;
@@ -231,7 +231,7 @@ void BinaryTree::deleteNode(Node* node)
 }
 
 
-Node* BinaryTree::searchNodeKLP(Node* root, int key)
+BinaryTree::Node* BinaryTree::searchNodeKLP(Node* root, int key)
 {
     if (!root || root->getKey() == key)
         return root;
