@@ -55,14 +55,14 @@ public:
             m_rightChild = right;
         }
     };
-private:
+protected:
     Node* m_root;
 
 public:
     BinaryTree();
     BinaryTree(const BinaryTree& copy);
     Node* copyTree(Node* root);
-    ~BinaryTree();
+    virtual ~BinaryTree();
     void deleteTree(Node* root);
     void cleanTree();
     void cleanSubTree(Node* root);
@@ -72,10 +72,10 @@ public:
     Node* getRoot();
     int getNumberNodes(Node* root) const; 
     int getNumberNodes() const;
-    Node* addNode(Node* root, int key);
-    Node* addNode(int key);
-    void deleteNode(Node* node);
-    bool deleteNode(int key);
+    virtual Node* addNode(Node* root, int key);
+    virtual Node* addNode(int key);
+    virtual void deleteNode(Node* node);
+    virtual bool deleteNode(int key);
     std::vector<int> getTreeKeys();
     void getTreeKeys(Node* root, std::vector<int>& treeKeys);
     void printHorizontal(Node* root, int marginLeft, int levelSpacing) const;
