@@ -1,7 +1,4 @@
 #include "BinaryTreeTester.h"
-#include <assert.h>
-#include <algorithm>
-#include <vector>
 
 BinaryTreeTester::BinaryTreeTester(const bool useConsoleOutput)
     : m_useConsoleOutput(useConsoleOutput)
@@ -77,7 +74,7 @@ void BinaryTreeTester::remove()
     }
 
     while (!nodeKeys.empty()) {
-        int removedNodeIndex = rand() % nodeKeys.size(); //3
+        int removedNodeIndex = rand() % nodeKeys.size();
 
         tree->deleteNode(invalidKey);
         check_remove(*tree, nodeKeys.size());
@@ -129,38 +126,28 @@ void BinaryTreeTester::assign()
         tree1.addNode(i);
     }
 
-    BinaryTree tree2 = tree1; // онструктор копировани€
+    BinaryTree tree2 = tree1;
 
-    std::vector<BinaryTree::Node*> tree1Nodes = treeNodes(tree1);
-    std::vector<BinaryTree::Node*> tree2Nodes = treeNodes(tree2);
+    std::vector<int> tree1Nodes = tree1.getTreeKeys();
+    std::vector<int> tree2Nodes = tree2.getTreeKeys();
 
-    //FixMe: доделать проверку
+    check_assign(tree1Nodes, tree2Nodes);
 
-    tree1 = tree2; //ѕрисваивание
+    tree1 = tree2;
 
-    tree1Nodes = treeNodes(tree1);
-    tree2Nodes = treeNodes(tree2);
+    tree1Nodes = tree1.getTreeKeys();
+    tree2Nodes = tree2.getTreeKeys();
 
-    //FixMe: доделать проверку
+    check_assign(tree1Nodes, tree2Nodes);
 }
 
-std::vector<const BinaryTree::Node*> BinaryTreeTester::treeNodes(const BinaryTree* tree)
+void BinaryTreeTester::check_assign(const std::vector<int> tree1Nodes, const std::vector<int> tree2Nodes)
 {
-    std::vector<const BinaryTree::Node*> nodes;
-
-    std::vector<const BinaryTree::Node*> nodesToProcess;
-    nodesToProcess.push_back(tree->root());
-    while (!nodesToProcess.empty()) {
-        const BinaryTree::Node* node = nodesToProcess.front();
-        if (node != nullptr) {
-            nodesToProcess.push(node->leftChild());
-            nodesToProcess.push(node->rightChild());
-            nodes.push_back(node);
-        }
-        nodesToProcess.pop();
+    assert(tree1Nodes.size() == tree2Nodes.size());
+    for (int i = 0; i < tree1Nodes.size(); i++)
+    {
+        assert(tree1Nodes[i] == tree2Nodes[i]);
     }
-
-    return nodes;
 }
 
 void BinaryTreeTester::height()
@@ -189,10 +176,10 @@ void BinaryTreeTester::height_longOnlyLeftSubtree()
 {
     BinaryTree longTree;
     longTree.addNode(0);
-    Node* runner = longTree.root();
+    Node* runner = longTree.getRoot();
     for (int i = 1; i < m_maxSize; ++i) {
-        runner->setLeftChild(new BinaryTree::Node(i));
-        runner = runner->leftChild();
+        runner->setLeftChild(new Node(i));
+        runner = runner->getLeftChild();
         check_height(longTree, i + 1);
     }
 }
@@ -201,10 +188,10 @@ void BinaryTreeTester::height_longOnlyRightSubtree()
 {
     BinaryTree longTree;
     longTree.addNode(0);
-    Node* runner = longTree.root();
+    Node* runner = longTree.getRoot();
     for (int i = 1; i < m_maxSize; ++i) {
-        runner->setRightChild(new BinaryTree::Node(i));
-        runner = runner->rightChild();
+        runner->setRightChild(new Node(i));
+        runner = runner->getRightChild();
         check_height(longTree, i + 1);
     }
 }
@@ -213,16 +200,16 @@ void BinaryTreeTester::height_longOnlyLeftAndRightSubtrees()
 {
     BinaryTree longTree;
     longTree.addNode(0);
-    Node* leftRunner = longTree.root();
-    Node* rightRunner = longTree.root();
+    Node* leftRunner = longTree.getRoot();
+    Node* rightRunner = longTree.getRoot();
     for (int i = 1; i < m_maxSize / 2; ++i) {
-        leftRunner->setLeftChild(new BinaryTree::Node(i));
-        leftRunner = leftRunner->leftChild();
+        leftRunner->setLeftChild(new Node(i));
+        leftRunner = leftRunner->getLeftChild();
         check_height(longTree, i + 1);
 
 
-        rightRunner->setRightChild(new BinaryTree::Node(i));
-        rightRunner = rightRunner->rightChild();
+        rightRunner->setRightChild(new Node(i));
+        rightRunner = rightRunner->getRightChild();
         check_height(longTree, i + 1);
     }
 }
@@ -231,36 +218,36 @@ void BinaryTreeTester::height_longRandomZigzagSubtrees()
 {
     BinaryTree longTree;
     longTree.addNode(0);
-    Node* leftRunner = longTree.root();
-    Node* rightRunner = longTree.root();
+    Node* leftRunner = longTree.getRoot();
+    Node* rightRunner = longTree.getRoot();
 
-    leftRunner->setLeftChild(new BinaryTree::Node(1));
-    leftRunner = leftRunner->leftChild();
-    rightRunner->setRightChild(new BinaryTree::Node(1));
-    rightRunner = rightRunner->rightChild();
+    leftRunner->setLeftChild(new Node(1));
+    leftRunner = leftRunner->getLeftChild();
+    rightRunner->setRightChild(new Node(1));
+    rightRunner = rightRunner->getRightChild();
 
     for (int i = 2; i < m_maxSize / 2; ++i) {
         if (rand() % 2 == 0)
         {
-            leftRunner->setLeftChild(new BinaryTree::Node(i));
-            leftRunner = leftRunner->leftChild();
+            leftRunner->setLeftChild(new Node(i));
+            leftRunner = leftRunner->getLeftChild();
         }
         else
         {
-            leftRunner->setRightChild(new BinaryTree::Node(i));
-            leftRunner = leftRunner->rightChild();
+            leftRunner->setRightChild(new Node(i));
+            leftRunner = leftRunner->getRightChild();
         }
         check_height(longTree, i + 1);
 
         if (rand() % 2 == 0)
         {
-            rightRunner->setLeftChild(new BinaryTree::Node(i));
-            rightRunner = rightRunner->leftChild();
+            rightRunner->setLeftChild(new Node(i));
+            rightRunner = rightRunner->getLeftChild();
         }
         else
         {
-            rightRunner->setRightChild(new BinaryTree::Node(i));
-            rightRunner = rightRunner->rightChild();
+            rightRunner->setRightChild(new Node(i));
+            rightRunner = rightRunner->getRightChild();
         }
         check_height(longTree, i + 1);
     }

@@ -1,5 +1,7 @@
 #pragma once
 #include "BinaryTree.h"
+#include <assert.h>
+#include <vector>
 
 class BinaryTreeTester
 {
@@ -14,7 +16,7 @@ protected:
     virtual void check_addAndCount(const BinaryTree &tree, const int size);
     virtual void check_remove(const BinaryTree &tree, const int size);
     virtual void check_clear(const BinaryTree &tree, const int size);
-    //ToDo: virtual check_assign()
+    virtual void check_assign(const std::vector<int> tree1Nodes, const std::vector<int> tree2Nodes);
     virtual void check_height(const BinaryTree& tree, const int size);
 
 private:
@@ -22,7 +24,7 @@ private:
     void addAndCount();
     void destructor();
     void remove();
-    void clear(); //ToDo: реализовать
+    void clear();
     void assign();
     void height();
     void height_trivialCases();
@@ -30,7 +32,7 @@ private:
     void height_longOnlyRightSubtree();
     void height_longOnlyLeftAndRightSubtrees();
     void height_longRandomZigzagSubtrees();
-    std::vector<const BinaryTree::Node*> BinaryTreeTester::treeNodes(const BinaryTree* tree);
+    //std::vector<int> BinaryTreeTester::treeNodes(const BinaryTree* tree);
 
 private:
     int m_maxSize;

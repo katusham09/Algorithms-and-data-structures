@@ -81,11 +81,16 @@ bool BinaryTree::isEmpty(Node* root)
 }
 
 
-int BinaryTree::height(Node* root)
+int BinaryTree::height(Node* root) const
 {
     if (root == nullptr)
         return 0;
     return 1 + std::max(height(root->getLeftChild()), height(root->getRightChild()));
+}
+
+int BinaryTree::height() const
+{
+    return height(m_root);
 }
 
 

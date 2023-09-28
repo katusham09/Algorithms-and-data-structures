@@ -1,4 +1,5 @@
 #include "BinaryTree.h"
+#include "BinaryTreeTester.h"
 
 int main()
 {
@@ -14,5 +15,6 @@ int main()
     std::cout << std::endl;
     tree.deleteNode(9);
     tree.printHorizontal(4, 4);
+
     return 0;
 }

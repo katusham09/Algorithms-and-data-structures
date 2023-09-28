@@ -17,7 +17,8 @@ public:
     void cleanTree();
     void cleanSubTree(Node* root);
     bool isEmpty(Node* root);
-    int height(Node* root);
+    int height(Node* root) const;
+    int height() const;
     Node* getRoot();
     int getNumberNodes(Node* root) const; 
     int getNumberNodes() const;
