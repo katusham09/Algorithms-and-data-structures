@@ -55,7 +55,7 @@ void BinaryTreeTester::destructor()
         deallocateTree(tree);
     }
     std::cout << "BinaryTreeTester::destructor ended. Press any key to continue..." << std::endl;
-    getchar();
+    std::getchar();
 
 }
 
@@ -110,7 +110,7 @@ void BinaryTreeTester::clear()
     }
     deallocateTree(tree);
     std::cout << "BinaryTreeTester::destructor ended. Press any key to continue..." << std::endl;
-    getchar();
+    std::getchar();
 }
 
 void BinaryTreeTester::check_clear(const BinaryTree &tree, const int size)

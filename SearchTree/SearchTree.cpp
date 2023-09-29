@@ -47,3 +47,76 @@ BinaryTree::Node* SearchTree::searchNode(Node* root, int key)
     else
         return searchNode(root->getLeftChild(), key);
 }
+
+BinaryTree::Node* SearchTree::searchNode(int key)
+{
+    return searchNode(m_root, key);
+}
+
+void SearchTree::deleteNode(Node* node, int key)
+{
+    Node* parent = findParent(node, m_root);
+    if (parent == nullptr && node != m_root)
+    {
+        return;
+    }
+
+    Node* replace = nullptr;
+    Node* tmp = nullptr;
+
+    if (node->getLeftChild() == nullptr && node->getRightChild() == nullptr)
+    {
+        replace = nullptr;
+    }
+
+    else if (node->getLeftChild() == nullptr && node->getRightChild() != nullptr)
+    {
+        replace = node->getRightChild();
+    }
+
+    else if (node->getRightChild() == nullptr && node->getLeftChild() != nullptr)
+    {
+        replace = node->getLeftChild();
+    }
+
+    else
+    {
+        tmp = node->getRightChild();
+        while (tmp->getLeftChild() != nullptr)
+        {
+            tmp = tmp->getLeftChild();
+        }
+        replace = tmp;
+
+        Node* tmpParent = findParent(tmp, m_root);
+        if (tmpParent != node)
+        {
+            tmpParent->setLeftChild(replace->getRightChild());
+            replace->setRightChild(node->getRightChild());
+        }
+        replace->setLeftChild(node->getLeftChild());
+    }
+
+    if (parent != nullptr)
+    {
+        if (parent->getLeftChild() == node)
+            parent->setLeftChild(replace);
+        else
+            parent->setRightChild(replace);
+        delete node;
+    }
+    else
+    {
+        delete m_root;
+        m_root = replace;
+    }
+}
+
+bool SearchTree::deleteNode(int key)
+{
+    Node* node = searchNode(key);
+    if (!node)
+        return false;
+    deleteNode(node, key);
+    return true;
+}

@@ -13,6 +13,7 @@ public:
 	void deleteNode(Node* root, int key);
 	bool deleteNode(int key) override;
 	Node* searchNode(Node* root, int key);
+	Node* searchNode(int key);
 	static SearchTree buildOptimalTree(const std::vector<int>& keys,
 		const std::vector<int>& keysFrequences,
 		const std::vector<int>& nonKeysFrequences);
