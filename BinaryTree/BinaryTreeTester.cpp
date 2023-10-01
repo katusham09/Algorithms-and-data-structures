@@ -120,34 +120,54 @@ void BinaryTreeTester::check_clear(const BinaryTree &tree, const int size)
 
 void BinaryTreeTester::assign()
 {
-    BinaryTree tree1;
+    BinaryTree *tree1 = allocateTree();
 
     for (int i = 0; i < m_maxSize; ++i) {
-        tree1.addNode(i);
+        tree1->addNode(i);
     }
 
-    BinaryTree tree2 = tree1;
+    BinaryTree* tree2 = allocateTree();
+    tree2 = tree1;
 
-    std::vector<int> tree1Nodes = tree1.getTreeKeys();
-    std::vector<int> tree2Nodes = tree2.getTreeKeys();
+    std::vector<const BinaryTree::Node*> tree1Nodes = treeNodes(tree1);
+    std::vector<const BinaryTree::Node*> tree2Nodes = treeNodes(tree2);
 
     check_assign(tree1Nodes, tree2Nodes);
 
     tree1 = tree2;
 
-    tree1Nodes = tree1.getTreeKeys();
-    tree2Nodes = tree2.getTreeKeys();
+    tree1Nodes = treeNodes(tree1);
+    tree2Nodes = treeNodes(tree2);
 
     check_assign(tree1Nodes, tree2Nodes);
 }
 
-void BinaryTreeTester::check_assign(const std::vector<int> tree1Nodes, const std::vector<int> tree2Nodes)
+void BinaryTreeTester::check_assign(const std::vector<const BinaryTree::Node*> tree1Nodes, const std::vector<const BinaryTree::Node*> tree2Nodes)
 {
-    assert(tree1Nodes.size() == tree2Nodes.size());
+    assert(tree1Nodes != tree2Nodes);
     for (int i = 0; i < tree1Nodes.size(); i++)
     {
         assert(tree1Nodes[i] == tree2Nodes[i]);
     }
+}
+
+std::vector<const BinaryTree::Node*> BinaryTreeTester::treeNodes(BinaryTree *tree)
+{
+    std::vector<const BinaryTree::Node*> nodes;
+
+    std::vector<const BinaryTree::Node*> nodesToProcess;
+    nodesToProcess.push_back(tree->getRoot());
+    while (!nodesToProcess.empty()) {
+        const BinaryTree::Node* node = nodesToProcess.front();
+        if (node != nullptr) {
+            nodesToProcess.push_back(node->getLeftChild());
+            nodesToProcess.push_back(node->getRightChild());
+            nodes.push_back(node);
+        }
+        nodesToProcess.pop_back();
+    }
+
+    return nodes;
 }
 
 void BinaryTreeTester::height()

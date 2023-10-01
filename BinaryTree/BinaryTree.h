@@ -35,12 +35,12 @@ public:
             return m_key;
         }
 
-        Node* getLeftChild()
+        Node* getLeftChild() const
         {
             return m_leftChild;
         }
 
-        Node* getRightChild()
+        Node* getRightChild() const
         {
             return m_rightChild;
         }

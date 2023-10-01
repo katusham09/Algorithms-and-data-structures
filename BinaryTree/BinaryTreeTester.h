@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <vector>
 
+
 class BinaryTreeTester
 {
 public:
@@ -16,7 +17,7 @@ protected:
     virtual void check_addAndCount(const BinaryTree &tree, const int size);
     virtual void check_remove(const BinaryTree &tree, const int size);
     virtual void check_clear(const BinaryTree &tree, const int size);
-    virtual void check_assign(const std::vector<int> tree1Nodes, const std::vector<int> tree2Nodes);
+    virtual void check_assign(const std::vector<const BinaryTree::Node*> tree1Nodes, const std::vector<const BinaryTree::Node*> tree2Nodes);
     virtual void check_height(const BinaryTree& tree, const int size);
 
 private:
@@ -32,6 +33,7 @@ private:
     void height_longOnlyRightSubtree();
     void height_longOnlyLeftAndRightSubtrees();
     void height_longRandomZigzagSubtrees();
+    std::vector<const BinaryTree::Node*> treeNodes(BinaryTree *tree);
 
 private:
     int m_maxSize;
