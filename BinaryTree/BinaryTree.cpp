@@ -139,20 +139,20 @@ void BinaryTree::printHorizontal(int marginLeft, int levelSpacing) const
     printHorizontal(m_root, marginLeft, levelSpacing);
 }
 
-std::vector<int> BinaryTree::getTreeKeys()
+std::vector<int> BinaryTree::getTreeKeys() const
 {
     std::vector<int> treeKeys;
     getTreeKeys(m_root, treeKeys);
     return treeKeys;
 }
 
-void BinaryTree::getTreeKeys(Node* root, std::vector<int>& treeKeys)
+void BinaryTree::getTreeKeys(Node* root, std::vector<int>& treeKeys) const
 {
     if (!root)
         return;
     getTreeKeys(root->getLeftChild(), treeKeys);
-    getTreeKeys(root->getRightChild(), treeKeys);
     treeKeys.push_back(root->getKey());
+    getTreeKeys(root->getRightChild(), treeKeys);
 }
 
 

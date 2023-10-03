@@ -20,6 +20,12 @@ BinaryTree::Node *SearchTree::addNode(Node* root, int key)
     return root;
 }
 
+BinaryTree::Node* SearchTree::addNode(int key)
+{
+    m_root = addNode(m_root, key);
+    return m_root;
+}
+
 int SearchTree::getMinKey(Node* root)
 {
     if (root->getLeftChild() != nullptr)

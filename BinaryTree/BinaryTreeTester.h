@@ -8,7 +8,7 @@ class BinaryTreeTester
 {
 public:
     BinaryTreeTester(const bool useConsoleOutput);
-    ~BinaryTreeTester() = default;
+    virtual ~BinaryTreeTester() = default;
 
     void test(const int size);
 
@@ -17,10 +17,9 @@ protected:
     virtual void check_addAndCount(const BinaryTree &tree, const int size);
     virtual void check_remove(const BinaryTree &tree, const int size);
     virtual void check_clear(const BinaryTree &tree, const int size);
-    virtual void check_assign(const std::vector<const BinaryTree::Node*> tree1Nodes, const std::vector<const BinaryTree::Node*> tree2Nodes);
+    void check_assign(const std::vector<const BinaryTree::Node*> tree1Nodes, const std::vector<const BinaryTree::Node*> tree2Nodes);
     virtual void check_height(const BinaryTree& tree, const int size);
 
-private:
     void deallocateTree(BinaryTree* tree);
     void addAndCount();
     void destructor();
@@ -35,7 +34,6 @@ private:
     void height_longRandomZigzagSubtrees();
     std::vector<const BinaryTree::Node*> treeNodes(BinaryTree *tree);
 
-private:
     int m_maxSize;
     bool m_useConsoleOutput;
 };

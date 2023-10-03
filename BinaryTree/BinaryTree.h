@@ -76,8 +76,8 @@ public:
     virtual Node* addNode(int key);
     virtual void deleteNode(Node* node);
     virtual bool deleteNode(int key);
-    std::vector<int> getTreeKeys();
-    void getTreeKeys(Node* root, std::vector<int>& treeKeys);
+    std::vector<int> getTreeKeys() const;
+    void getTreeKeys(Node* root, std::vector<int>& treeKeys) const;
     void printHorizontal(Node* root, int marginLeft, int levelSpacing) const;
     void printHorizontal(int marginLeft, int Space) const;
     Node* searchNodeKLP(Node* root, int key);
