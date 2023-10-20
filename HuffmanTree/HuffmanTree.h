@@ -1,5 +1,8 @@
 #pragma once
+#include <iostream>
+#include <list>
 #include <string>
+#include <unordered_map>
 
 class HuffmanTree
 {
@@ -53,6 +56,25 @@ public:
     {
         m_right = right;
     }
+
+    Node(char ch, int frequency, Node* left, Node* right)
+    {
+        setChar(ch);
+        setFrequency(frequency);
+        setLeft(left);
+        setRight(right);
+    }
+
+    void setChar(char ch) 
+    {
+        m_symbols.push_back(ch); 
+    }
+
+    void setFrequency(int frequency)
+    {
+        m_frequency = frequency;
+    }
+
 private:
     Node* m_left = nullptr;
     Node* m_right = nullptr;
