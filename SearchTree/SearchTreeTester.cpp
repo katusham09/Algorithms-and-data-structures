@@ -2,6 +2,16 @@
 
 #include "SearchTreeTester.h"
 
+void SearchTreeTester::test(const int size)
+{
+    m_maxSize = size;
+    addAndCount();
+    destructor();
+    remove();
+    clear();
+    assign();
+}
+
 SearchTreeTester::SearchTreeTester(const bool useConsoleOutput)
     : BinaryTreeTester(useConsoleOutput)
 {}

@@ -1,10 +1,11 @@
 #include "SearchTree.h"
+#include "SearchTreeTester.h"
 #include <iostream>
 
 
 int main()
 {	
-	srand(time(0));
+	/*srand(time(0));
 	int tmp[10];
 	for (int i = 0; i < 10; i++)
 	{
@@ -32,5 +33,9 @@ int main()
 	std::cin >> key;
 
 	tree.deleteNode(key);
-	tree.printHorizontal(2, 5);
+	tree.printHorizontal(2, 5);*/
+
+	SearchTreeTester tester(true);
+
+	tester.test(5);
 }

@@ -10,7 +10,7 @@ public:
     BinaryTreeTester(const bool useConsoleOutput);
     virtual ~BinaryTreeTester() = default;
 
-    void test(const int size);
+    virtual void test(const int size);
 
 protected:
     virtual BinaryTree* allocateTree();

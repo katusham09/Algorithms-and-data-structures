@@ -7,6 +7,8 @@ public:
     SearchTreeTester(const bool useConsoleOutput);
     ~SearchTreeTester() = default;
 
+    void test(const int size) override;
+
 protected:
     BinaryTree* allocateTree() override;
     void check_addAndCount(const BinaryTree& tree, const int size) override;
