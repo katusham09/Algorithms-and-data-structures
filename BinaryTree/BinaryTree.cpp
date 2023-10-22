@@ -134,6 +134,7 @@ void BinaryTree::printHorizontal(Node* root, int marginLeft, int levelSpacing) c
     std::cout << std::string(marginLeft, ' ') << root->getKey() << std::endl;
     printHorizontal(root->getLeftChild(), marginLeft + levelSpacing, levelSpacing);
 }
+
 void BinaryTree::printHorizontal(int marginLeft, int levelSpacing) const
 {
     printHorizontal(m_root, marginLeft, levelSpacing);
