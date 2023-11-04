@@ -118,33 +118,69 @@ void BinaryTreeTester::check_clear(const BinaryTree &tree, const int size)
     assert(tree.getNumberNodes() == size);
 }
 
+//void BinaryTreeTester::assign()
+//{
+//    BinaryTree tree1;
+//
+//    for (int i = 0; i < m_maxSize; ++i) {
+//        tree1.addNode(i);
+//    }
+//
+//    BinaryTree tree2 = tree1;
+//
+//    std::vector<int> getKeysTree1 = tree1.getTreeKeys();
+//    std::vector<int> getKeysTree2 = tree2.getTreeKeys();
+//
+//    std::vector<const BinaryTree::Node*> tree1Nodes = treeNodes(&tree1);
+//    std::vector<const BinaryTree::Node*> tree2Nodes = treeNodes(&tree2);
+//
+//    check_assign(getKeysTree1, getKeysTree2, tree1Nodes, tree2Nodes);
+//
+//    tree1 = tree2;
+//
+//    getKeysTree1 = tree1.getTreeKeys();
+//    getKeysTree2 = tree2.getTreeKeys();
+//
+//    tree1Nodes = treeNodes(&tree1);
+//    tree2Nodes = treeNodes(&tree2);
+//
+//    check_assign(getKeysTree1, getKeysTree2, tree1Nodes, tree2Nodes);
+//
+//    std::cout << "BinaryTreeTester::assign ended. Press any key to continue..." << std::endl;
+//    std::getchar();
+//}
+
 void BinaryTreeTester::assign()
 {
-    BinaryTree tree1;
+    BinaryTree* tree1 = allocateTree();
 
     for (int i = 0; i < m_maxSize; ++i) {
-        tree1.addNode(i);
+        tree1->addNode(i);
     }
 
-    BinaryTree tree2 = tree1;
+    BinaryTree* tree2 = allocateTree();
+    *tree2 = *tree1;
 
-    std::vector<int> getKeysTree1 = tree1.getTreeKeys();
-    std::vector<int> getKeysTree2 = tree2.getTreeKeys();
+    std::vector<int> getKeysTree1 = tree1->getTreeKeys();
+    std::vector<int> getKeysTree2 = tree2->getTreeKeys();
 
-    std::vector<const BinaryTree::Node*> tree1Nodes = treeNodes(&tree1);
-    std::vector<const BinaryTree::Node*> tree2Nodes = treeNodes(&tree2);
+    std::vector<const BinaryTree::Node*> tree1Nodes = treeNodes(tree1);
+    std::vector<const BinaryTree::Node*> tree2Nodes = treeNodes(tree2);
+
+    check_assign(getKeysTree1, getKeysTree2, tree1Nodes, tree2Nodes);
+
+    *tree1 = *tree2;
+
+    getKeysTree1 = tree1->getTreeKeys();
+    getKeysTree2 = tree2->getTreeKeys();
+
+    tree1Nodes = treeNodes(tree1);
+    tree2Nodes = treeNodes(tree2);
 
     check_assign(getKeysTree1, getKeysTree2, tree1Nodes, tree2Nodes);
 
-    tree1 = tree2;
-
-    getKeysTree1 = tree1.getTreeKeys();
-    getKeysTree2 = tree2.getTreeKeys();
-
-    tree1Nodes = treeNodes(&tree1);
-    tree2Nodes = treeNodes(&tree2);
-
-    check_assign(getKeysTree1, getKeysTree2, tree1Nodes, tree2Nodes);
+    deallocateTree(tree1);
+    deallocateTree(tree2);
 
     std::cout << "BinaryTreeTester::assign ended. Press any key to continue..." << std::endl;
     std::getchar();

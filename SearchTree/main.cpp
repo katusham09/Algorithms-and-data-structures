@@ -37,5 +37,5 @@ int main()
 
 	SearchTreeTester tester(true);
 
-	tester.test(5);
+	tester.test(50);
 }
