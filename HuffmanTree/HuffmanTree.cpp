@@ -15,7 +15,6 @@ void HuffmanTree::deleteHuffmanTree(Node* node)
 	}
 }
 
-
 bool HuffmanTree::build(const std::string& text)
 {
     deleteHuffmanTree(m_root);
@@ -35,6 +34,10 @@ bool HuffmanTree::build(const std::string& text)
     }
     file.close();
 
+    for (auto it = frequency.begin(); it != frequency.end(); it++) 
+    {
+        std::cout << it->first << " " << it->second << std::endl;
+    }
 
     for (auto pair : frequency)
     {
@@ -141,6 +144,44 @@ double HuffmanTree::encode(const std::string& text, std::string& encodedText)
 
     file1.close();
     file2.close();
+    std::cout << "compression = " << compression << std::endl;
     return compression;
-    return 2;
+}
+
+bool HuffmanTree::decode(const std::string& encodedText, std::string& decodedText) const
+{
+    char symbols;
+    std::ifstream file1(encodedText);
+    std::ofstream file2(decodedText);
+    if (!file1.is_open() || !file2.is_open())
+    {
+        return false;
+    }
+
+    Node* temp = m_root;
+
+    while (file1.get(symbols))
+    {
+        if (symbols == '0' && temp->getLeft())
+        {
+            temp = temp->getLeft();
+        }
+        else
+            if (temp->getRight())
+            {
+                temp = temp->getRight();
+            }
+
+        if (!temp->getLeft() && !temp->getRight())
+        {
+            std::set<char> tempTemp = temp->getSymbols();
+            std::set<char>::iterator it;
+            it = tempTemp.begin();
+            file2 << *it;
+            temp = m_root;
+        }
+    }
+    file1.close();
+    file2.close();
+    return true;
 }

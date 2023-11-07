@@ -4,7 +4,10 @@ int main()
 {
 	HuffmanTree tree;
 	std::string text = "text.txt";
-	std::string encodeText = "encodeText.txt";
+	std::string encodedText = "encodeText.txt";
+	std::string decodedText = "decodeText.txt";
+
 	tree.build(text);
-	tree.encode(text, encodeText);
+	tree.encode(text, encodedText);
+	tree.decode(encodedText, decodedText);
 }
