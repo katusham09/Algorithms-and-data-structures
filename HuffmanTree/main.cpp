@@ -8,6 +8,6 @@ int main()
 	std::string decodedText = "decodeText.txt";
 
 	tree.build(text);
-	tree.encode(text, encodedText);
+	std::cout << "compression = " << tree.encode(text, encodedText) << std::endl;
 	tree.decode(encodedText, decodedText);
 }

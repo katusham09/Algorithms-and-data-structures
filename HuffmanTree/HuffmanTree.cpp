@@ -15,12 +15,12 @@ void HuffmanTree::deleteHuffmanTree(Node* node)
 	}
 }
 
-bool HuffmanTree::build(const std::string& text)
+bool HuffmanTree::build(const std::string& textFileName)
 {
     deleteHuffmanTree(m_root);
 
     char symbols;
-    std::ifstream file(text);
+    std::ifstream file(textFileName);
     if (!file.is_open())
     {
         return false;
@@ -84,14 +84,13 @@ bool HuffmanTree::build(const std::string& text)
 
 std::string HuffmanTree::encode(char ch)
 {
-    std::string encodedChar;
-    encode(m_root, ch, "", encodedChar);
+    std::string encodedChar = encode(m_root, ch, "");
     if (m_root != nullptr && encodedChar.size() == 0)
-        encodedChar += "0";
+        encodedChar = "0";
     return encodedChar;
 }
 
-void HuffmanTree::encode(Node* root, char ch, std::string Code, std::string& encodedChar)
+std::string HuffmanTree::encode(Node* root, char ch, std::string Code)
 {   
     if (!root)
     {
@@ -100,29 +99,32 @@ void HuffmanTree::encode(Node* root, char ch, std::string Code, std::string& enc
 
     if (!root->getLeft() && !root->getRight())
     {
-        encodedChar = Code;
+        return Code;
     }
 
     if (root->getLeft())
     {
         std::set<char> tempLeft = root->getLeft()->getSymbols();
         if (tempLeft.find(ch) != tempLeft.end())
-            encode(root->getLeft(), ch, Code + "0", encodedChar);
+            return encode(root->getLeft(), ch, Code + "0");
         else
-            encode(root->getRight(), ch, Code + "1", encodedChar);
+            return encode(root->getRight(), ch, Code + "1");
     }
 }
 
-double HuffmanTree::encode(const std::string& text, std::string& encodedText)
+double HuffmanTree::encode(const std::string& textFileName, const std::string& encodedTextFileName)
 {
-    build(text);
+    if (m_root == nullptr)
+    {
+        build(textFileName);
+    }
 
     if (m_root == nullptr)
     {
         return 0;
     }
-    std::ifstream file1(text);
-    std::ofstream file2(encodedText);
+    std::ifstream file1(textFileName);
+    std::ofstream file2(encodedTextFileName);
     if (!file1.is_open() || !file2.is_open())
     {
         return -1;
@@ -144,15 +146,14 @@ double HuffmanTree::encode(const std::string& text, std::string& encodedText)
 
     file1.close();
     file2.close();
-    std::cout << "compression = " << compression << std::endl;
     return compression;
 }
 
-bool HuffmanTree::decode(const std::string& encodedText, std::string& decodedText) const
+bool HuffmanTree::decode(const std::string& encodedTextFileName, const std::string& decodedTextFileName) const
 {
     char symbols;
-    std::ifstream file1(encodedText);
-    std::ofstream file2(decodedText);
+    std::ifstream file1(encodedTextFileName);
+    std::ofstream file2(decodedTextFileName);
     if (!file1.is_open() || !file2.is_open())
     {
         return false;

@@ -15,10 +15,10 @@ public:
     ~HuffmanTree();
     void deleteHuffmanTree(Node* node);
     bool build(const std::string& text);
-    double encode(const std::string& text, std::string& encodedText);
-    void encode(Node* node, char symbols, std::string Code, std::string& encodedChar);
+    double encode(const std::string& text, const std::string& encodedText);
+    std::string encode(Node* node, char symbols, std::string Code);
     std::string encode(char ch);
-    bool decode(const std::string& encodedText, std::string& decodedText) const;
+    bool decode(const std::string& encodedText, const std::string& decodedText) const;
 
 private:
     Node* m_root = nullptr;
