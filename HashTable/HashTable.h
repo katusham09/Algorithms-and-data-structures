@@ -2,6 +2,29 @@
 #include <string>
 #include <vector>
 
+
+class HashFunction
+{
+public:
+    int getHash(int key, int size)
+    {
+        const int c = 18 % 5;
+        const int d = 18 % 7;
+        int hash = key % size;
+        for (int i = 1;; i++)
+        {
+            hash = (hash + c * i + d * i * i) % size;
+            if (hash < size)
+                return hash;
+        }
+    }
+    ~HashFunction() = default;
+    HashFunction* clone()
+    {
+        return new HashFunction(*this);
+    }
+};
+
 class HashTable
 {
     class Node
@@ -65,15 +88,13 @@ public:
 
     void add(int key, int value);
     void printTable() const;
-    void clear();
+    void clear(); 
     void copyTable(const HashTable& copy);
     HashTable& operator=(const HashTable& copy);
     int& operator[](int key);
     void remove(int key);
+    bool contains(int key);
 
-    int getSize() { return m_size; }
-    std::vector<Node*> getNodes() { return m_nodes; }
-    int getCapacity() { return m_capacity; }
     std::vector<Node*> nodes() const
     {
         std::vector<Node*> nodes;
@@ -93,7 +114,7 @@ private:
     std::vector<Node*> m_nodes;
     int m_size;
     int m_capacity;
-    HashFunction* m_hashFunction;
+    HashFunction *m_hashFunction;
 
     void setSize(int newSize) 
     { 
@@ -108,27 +129,5 @@ private:
     void setHashFunction(HashFunction* hashFunction) 
     {
         m_hashFunction = hashFunction; 
-    }
-};
-
-class HashFunction
-{
-public:
-    int getHash(int key, int size)
-    {
-        const int c = 18 % 5;
-        const int d = 18 % 7;
-        int hash = key % size;
-        for (int i = 1;; i++)
-        {
-            hash = (hash + c * i + d * i * i) % size;
-            if (hash < size)
-                return hash;
-        }
-    }
-    ~HashFunction() = default;
-    HashFunction* clone() 
-    {
-        return new HashFunction(*this);
     }
 };
