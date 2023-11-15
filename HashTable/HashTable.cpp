@@ -7,7 +7,6 @@ HashTable::HashTable()
     setSize(0);
     setCapacity(10);
     setHashFunction(new HashFunction());
-    m_nodes.resize(m_capacity, nullptr);
 }
 
 HashTable::HashTable(int size)
@@ -15,7 +14,6 @@ HashTable::HashTable(int size)
     setSize(0);
     setCapacity(size);
     setHashFunction(new HashFunction());
-    m_nodes.resize(m_capacity, nullptr);
 }
 
 HashTable::HashTable(const HashTable& copy)
@@ -44,8 +42,13 @@ void HashTable::clear()
             delete previousNode;
             
         }
+        node = nullptr;
     }
-    m_nodes.clear();
+    std::vector<Node*>::iterator it = m_nodes.begin();
+    for (it = m_nodes.begin(); it != m_nodes.end(); it++)
+    {
+        m_nodes.erase(it);
+    }
     setSize(0);
 }
 
@@ -57,7 +60,6 @@ void HashTable::add(int key, int value)
     if (m_nodes[hash] == nullptr)
     {
         m_nodes[hash] = addNode;
-        m_size++;
     }
     else
     {
@@ -67,11 +69,11 @@ void HashTable::add(int key, int value)
             temp = temp->getNextNode();
         }
         temp->setNextNode(addNode);
-        m_size++;
     }
+    m_size++;
 }
 
-void HashTable::remove(int key)
+bool HashTable::remove(int key)
 {
     int hash = m_hashFunction->getHash(key, m_capacity);
     Node* temp = m_nodes[hash];
@@ -93,11 +95,12 @@ void HashTable::remove(int key)
                 m_nodes[hash] = nextNode;
             }
             m_size--;
-            return;
+            return true;
         }
         parent = temp;
         temp = temp->getNextNode();
     }
+    return false;
 }
 
 bool HashTable::contains(int key)

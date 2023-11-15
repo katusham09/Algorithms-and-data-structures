@@ -2,21 +2,16 @@
 #include <string>
 #include <vector>
 
-
 class HashFunction
 {
 public:
     int getHash(int key, int size)
     {
-        const int c = 18 % 5;
-        const int d = 18 % 7;
+        const int c = 13 % 5;
+        const int d = 13 % 7;
         int hash = key % size;
-        for (int i = 1;; i++)
-        {
-            hash = (hash + c * i + d * i * i) % size;
-            if (hash < size)
-                return hash;
-        }
+        int i = 2;
+        return hash = (hash + c * i + d * i * i) % size;
     }
     ~HashFunction() = default;
     HashFunction* clone()
@@ -92,7 +87,7 @@ public:
     void copyTable(const HashTable& copy);
     HashTable& operator=(const HashTable& copy);
     int& operator[](int key);
-    void remove(int key);
+    bool remove(int key);
     bool contains(int key);
 
     std::vector<Node*> nodes() const
@@ -110,6 +105,13 @@ public:
         return nodes;
     }
 
+    int getCapacity() { return m_capacity; }
+    std::vector<Node*> getNodes() { return m_nodes; }
+    int getSize()
+    {
+        return m_size;
+    }
+
 private:
     std::vector<Node*> m_nodes;
     int m_size;
@@ -123,11 +125,17 @@ private:
 
     void setCapacity(int newCapacity) 
     {
-        m_capacity = newCapacity; 
+        m_capacity = newCapacity;
+        m_nodes.resize(m_capacity, nullptr);
     }
 
     void setHashFunction(HashFunction* hashFunction) 
     {
         m_hashFunction = hashFunction; 
+    }
+
+    void setNodes(std::vector < Node*> nodes)
+    {
+        m_nodes = nodes;
     }
 };
