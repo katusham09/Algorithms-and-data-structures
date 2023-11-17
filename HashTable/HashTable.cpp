@@ -42,12 +42,10 @@ void HashTable::clear()
             delete previousNode;
             
         }
-        node = nullptr;
     }
-    std::vector<Node*>::iterator it = m_nodes.begin();
-    for (it = m_nodes.begin(); it != m_nodes.end(); it++)
+    for (int i = 0; i < m_capacity; i++)
     {
-        m_nodes.erase(it);
+        m_nodes[i] = nullptr;
     }
     setSize(0);
 }
@@ -159,6 +157,7 @@ HashTable& HashTable::operator=(const HashTable& copy)
 {
     if (this != &copy)
     {
+        delete m_hashFunction;
         copyTable(copy);
     }
     return *this;

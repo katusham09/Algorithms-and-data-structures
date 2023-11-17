@@ -3,8 +3,6 @@
 
 class HashTableTester
 {
-
-
 public:
 
     HashTableTester(const bool useConsoleOutput);
