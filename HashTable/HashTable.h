@@ -109,19 +109,14 @@ public:
     std::vector<Node*> getNodes() { return m_nodes; }
     int getSize()
     {
-        return m_size;
+        return m_nodeCount;
     }
 
 private:
     std::vector<Node*> m_nodes;
-    int m_size;
+    int m_nodeCount;
     int m_capacity;
     HashFunction *m_hashFunction;
-
-    void setSize(int newSize) 
-    { 
-        m_size = newSize; 
-    }
 
     void setCapacity(int newCapacity) 
     {

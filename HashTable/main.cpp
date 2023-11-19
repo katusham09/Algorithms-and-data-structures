@@ -3,7 +3,7 @@
 
 int main()
 {
-	HashTable table(10);
+	/*HashTable table(10);
 	table.add(3, 6);
 	table.add(4, 3);
 	table.add(1, 1);
@@ -20,8 +20,8 @@ int main()
 	table.printTable();
 	table.clear();
 	std::cout << "dell" << std::endl;
-	table.printTable();
+	table.printTable();*/
 
-	/*HashTableTester tester(true);
-	tester.test(3);*/
+	HashTableTester tester(true);
+	tester.test(3);
 }

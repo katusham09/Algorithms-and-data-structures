@@ -9,9 +9,9 @@ void HashTableTester::test(int maxSize)
 {
 	srand(time(NULL));
 	max_size = maxSize;
-	//addAndClear();
-	//search();
-	//remove();
+	addAndClear();
+	search();
+	remove();
 	assign();
 }
 
@@ -20,7 +20,7 @@ void HashTableTester::addAndClear()
 	HashTable table(max_size);
 	for (int i = 0; i < max_size; i++)
 	{
-		table.add(rand() % max_size, rand() % 100);
+		table.add(rand() % 100, rand() % 100);
 	}
 	checkAdd(table, table.getCapacity());
 
@@ -54,7 +54,7 @@ void HashTableTester::search()
 	HashTable table(max_size);
 	for (int i = 0; i < max_size; i++)
 	{
-		table.add(i, rand() % 500);
+		table.add(i, rand() % 100);
 	}
 
 	for (int i = 0; i < max_size; i++)
@@ -71,19 +71,23 @@ void HashTableTester::remove()
 	HashTable table(max_size);
 
 	for (int i = 0; i < max_size; i++)
-		table.add(i, rand() % 500);
+		table.add(i, rand() % 100);
 
 	for (int i = 0; i < max_size; i++)
 	{
 		assert(table.remove(i) == true);
 		assert(table.contains(i) == false);
 	}
-	for (int i = 0; i < max_size; i++)
-		table.add(i, rand() % 500);
 
-	assert(table.remove(table.nodes()[max_size - 1]->getKey()) == true);
-	assert(table.remove(table.nodes()[max_size / 2]->getKey()) == true);
-	assert(table.remove(table.nodes()[0]->getKey()) == true);
+	for (int i = 0; i < max_size; i++)
+		assert(table.getNodes()[i] == nullptr);
+
+	for (int i = 0; i < max_size; i++)
+		table.add(i, rand() % 100);
+
+	assert(table.remove(table.getNodes()[max_size - 1]->getKey()) == true);
+	assert(table.remove(table.getNodes()[max_size / 2]->getKey()) == true);
+	assert(table.remove(table.getNodes()[0]->getKey()) == true);
 
 	std::cout << "HashTableTester::remove ended. Press any key to continue..." << std::endl;
 	getchar();
@@ -93,7 +97,7 @@ void HashTableTester::assign()
 {
 	HashTable table1(max_size);
 	for (int i = 0; i < max_size; i++)
-		table1.add(rand() % 300, rand() % 500);
+		table1.add(rand() % 100, rand() % 100);
 
 	HashTable table2 = table1;
 
@@ -102,13 +106,8 @@ void HashTableTester::assign()
 
 	for (int i = 0; i < table1.nodes().size(); i++)
 	{
-		if (table1.nodes()[i])
-		{
-			assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
-			assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
-		}
-		else
-			assert(table1.nodes()[i] == table2.nodes()[i]);
+		assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
+		assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
 	}
 
 	table1.clear();
@@ -125,13 +124,8 @@ void HashTableTester::assign()
 
 	for (int i = 0; i < table1.nodes().size(); i++)
 	{
-		if (table1.nodes()[i])
-		{
-			assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
-			assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
-		}
-		else
-			assert(table1.nodes()[i] == table2.nodes()[i]);
+		assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
+		assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
 	}
 	std::cout << "HashTableTester::assign ended. Press any key to continue..." << std::endl;
 	getchar();
