@@ -106,13 +106,8 @@ void HashTableTester::assign()
 
 	for (int i = 0; i < table1.nodes().size(); i++)
 	{
-		if (table1.nodes()[i])
-		{
-			assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
-			assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
-		}
-		else
-			assert(table1.nodes()[i] == table2.nodes()[i]);
+		assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
+		assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
 	}
 
 	table1.clear();
@@ -129,13 +124,8 @@ void HashTableTester::assign()
 
 	for (int i = 0; i < table1.nodes().size(); i++)
 	{
-		if (table1.nodes()[i])
-		{
-			assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
-			assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
-		}
-		else
-			assert(table1.nodes()[i] == table2.nodes()[i]);
+		assert(table1.nodes()[i]->getKey() == table2.nodes()[i]->getKey());
+		assert(table1.nodes()[i]->getValue() == table2.nodes()[i]->getValue());
 	}
 	std::cout << "HashTableTester::assign ended. Press any key to continue..." << std::endl;
 	getchar();

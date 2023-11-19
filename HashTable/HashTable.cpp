@@ -4,21 +4,21 @@
 
 HashTable::HashTable()
 {
-    setSize(0);
+    m_nodeCount = 0;
     setCapacity(10);
     setHashFunction(new HashFunction());
 }
 
 HashTable::HashTable(int size)
 {
-    setSize(0);
+    m_nodeCount = 0;
     setCapacity(size);
     setHashFunction(new HashFunction());
 }
 
 HashTable::HashTable(const HashTable& copy)
 {
-    setSize(0);
+    m_nodeCount = 0;
     setCapacity(copy.m_capacity);
     setHashFunction(copy.m_hashFunction->clone());
     copyTable(copy);
@@ -47,7 +47,7 @@ void HashTable::clear()
     {
         m_nodes[i] = nullptr;
     }
-    setSize(0);
+    m_nodeCount = 0;
 }
 
 void HashTable::add(int key, int value)
@@ -68,7 +68,7 @@ void HashTable::add(int key, int value)
         }
         temp->setNextNode(addNode);
     }
-    m_size++;
+    m_nodeCount++;
 }
 
 bool HashTable::remove(int key)
@@ -92,7 +92,7 @@ bool HashTable::remove(int key)
                 delete temp;
                 m_nodes[hash] = nextNode;
             }
-            m_size--;
+            m_nodeCount--;
             return true;
         }
         parent = temp;
@@ -143,7 +143,7 @@ void HashTable::printTable() const
 void HashTable::copyTable(const HashTable& copy)
 {
     clear();
-    setSize(copy.m_size);
+    m_nodeCount = copy.m_nodeCount;
     setCapacity(copy.m_capacity);
     setHashFunction(copy.m_hashFunction->clone());
 
