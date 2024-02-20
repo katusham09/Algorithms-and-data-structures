@@ -24,30 +24,9 @@ MainWindow::MainWindow(QWidget *parent)
     , m_scene(new QGraphicsScene(this))
 {
     ui->setupUi(this);
-    QFile file("text.txt");
-    if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "Can't open the file!";
-        return;
-    }
-    ui->stringEdit->setText(file.fileName());
-
-    QFile code("encodeText.txt");
-    if (!code.open(QIODevice::ReadOnly)) {
-        qDebug() << "Can't open the code!";
-        return;
-    }
-    ui->codeEdit->setText(code.fileName());
-
-    QFile decode("decodeText.txt");
-    if (!decode.open(QIODevice::ReadOnly)) {
-        qDebug() << "Can't open the code!";
-        return;
-    }
-    ui->decodeEdit->setText(decode.fileName());
-
-    file.close();
-    code.close();
-    decode.close();
+    ui->stringEdit->setPlaceholderText("Введите сообщение");
+    ui->codeEdit->setPlaceholderText("Закодированное сообщение");
+    ui->decodeEdit->setPlaceholderText("Раскодированное сообщение");
 
     ui->button_decode->setEnabled(false);
     ui->graphicsView->setScene(m_scene);
@@ -64,41 +43,54 @@ MainWindow::~MainWindow()
 void MainWindow::on_clicked_encode()
 {
     QString str = ui->stringEdit->text();
+    QFile file("text.txt");
+    if(file.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QTextStream stream(&file);
+        stream << str;
+        file.close();
+    }
+    else
+    {
+        displayError("Не удалось создать и записать файл");
+    }
+    onTreeUpdate(file.fileName().toStdString());
     if(str != "")
     {
-        QString encode = ui->codeEdit->text();
-        tree.encode(str.toStdString(),encode.toStdString());
-        QFile file(encode);
-        if(file.open(QIODevice::ReadOnly))
+        QFile code("encodeText.txt");
+        tree.encode(file.fileName().toStdString(),code.fileName().toStdString());
+        if(code.open(QIODevice::ReadOnly))
         {
-            QTextStream stream(&file);
-            QString str = stream.readAll();
-            ui->codeEdit->setText(str);
-            file.close();
+            QTextStream stream(&code);
+            QString string = stream.readAll();
+            ui->codeEdit->setText(string);
+            code.close();
         }
-        ui->stringEdit->setText("encodeText.txt");
         ui->button_decode->setEnabled(true);
-        onTreeUpdate(str.toStdString());
     }
     else
         displayError("line of sring is empty");
-
 }
 
 void MainWindow::on_clicked_decode()
 {
-    QString code = ui->stringEdit->text();
+    QString code = ui->codeEdit->text();
     if(code != "")
     {
-        QString decode = ui->decodeEdit->text();
-        tree.decode(code.toStdString(),decode.toStdString());
-        QFile file(decode);
-        if(file.open(QIODevice::ReadOnly))
+        QFile code("encodeText.txt");
+        if (!code.open(QIODevice::ReadOnly))
         {
-            QTextStream stream(&file);
-            QString code = stream.readAll();
-            ui->decodeEdit->setText(code);
-            file.close();
+            qDebug() << "Can't open the code!";
+            return;
+        }
+        QFile decode("decodeText.txt");
+        tree.decode(code.fileName().toStdString(),decode.fileName().toStdString());
+        if(decode.open(QIODevice::ReadOnly))
+        {
+            QTextStream stream(&decode);
+            QString string = stream.readAll();
+            ui->decodeEdit->setText(string);
+            decode.close();
         }
     }
     else
@@ -107,6 +99,7 @@ void MainWindow::on_clicked_decode()
 
 void MainWindow::onTreeUpdate(const std::string& fileContent)
 {
+    m_scene->clear();
     tree.build(fileContent);
     printTree();
 }
